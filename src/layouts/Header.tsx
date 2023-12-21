@@ -1,7 +1,8 @@
-import { Layout } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageSwitcher } from '../components';
+import { Auth } from '../components';
 
 const { Header } = Layout;
 
@@ -32,8 +33,14 @@ export default function LayoutHeader() {
       }}
     >
       <Link to="/">Welcome page</Link>
-
-      <LanguageSwitcher />
+      <Row>
+        <Col>
+          <LanguageSwitcher />
+        </Col>
+        <Col>
+          <Auth />
+        </Col>
+      </Row>
       {/* user menu */}
     </Header>
   );

@@ -41,14 +41,16 @@ const LoginForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS
             placeholder={getText(TEXT.PASSWORD, locale)}
           />
         </Form.Item>
-        <Form.Item name="password-confirm" hasFeedback validateFirst>
-          <Input.Password
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            autoComplete="new-password"
-            placeholder={getText(TEXT.PASSWORD_CONFIRM, locale)}
-          />
-        </Form.Item>
+        {method === METHODS.SIGN_UP && (
+          <Form.Item name="password-confirm" hasFeedback validateFirst>
+            <Input.Password
+              prefix={<LockOutlined className="site-form-item-icon" />}
+              type="password"
+              autoComplete="new-password"
+              placeholder={getText(TEXT.PASSWORD_CONFIRM, locale)}
+            />
+          </Form.Item>
+        )}
 
         <Form.Item>
           <Button

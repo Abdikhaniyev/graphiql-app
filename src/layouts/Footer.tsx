@@ -13,7 +13,7 @@ export default function LayoutFooter() {
       link: 'https://github.com/ValeryMatskevich',
     },
     {
-      name: 'Vladimir Trainee',
+      name: 'Vladimir Kirpichyov',
       link: 'https://github.com/VladimirTrainee',
     },
   ];

@@ -34,7 +34,7 @@ export default function Auth() {
 
   return (
     <>
-      <Row>
+      <Row gutter={[8, 8]}>
         {authLabels.map(([text, condition, type, action, actionMethod], index) => {
           if (!condition) return <Fragment key={`fragment-${index}`}></Fragment>;
           return (

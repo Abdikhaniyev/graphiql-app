@@ -30,10 +30,11 @@ export default function LayoutHeader() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        zIndex: 1000,
       }}
     >
       <Link to="/">Welcome page</Link>
-      <Row>
+      <Row gutter={[8, 8]}>
         <Col>
           <LanguageSwitcher />
         </Col>

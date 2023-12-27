@@ -39,11 +39,19 @@ export const textInit: Text[] = [
 
   [KEYS.PASSWORD, 'Password', 'Пароль'],
   [KEYS.PASSWORD_CONFIRM, 'Password Confirm', 'Подтвердите пароль'],
-  
+
   [KEYS.HOME, 'Home', 'Главная'],
   [KEYS.OUR_TEAM, 'Our team', 'Наша команда'],
   [KEYS.ABOUT_PROJECT, 'About project', 'О проекте'],
-  [KEYS.ABOUT_PROJECT_DESCRIPTION, 'This application was created as part of training at RS School. GraphiQL is a powerful tool for working with the GraphQL query language. It is an interactive web environment designed to create, debug, and test GraphQL queries. The GraphiQL project makes it easy to interact with an API that uses GraphQL.', 'Это приложение создано в рамках обучения в RS School. GraphiQL представляет собой мощный инструмент для работы с языком запросов GraphQL. Это интерактивная веб-среда, предназначенная для создания, отладки и тестирования запросов GraphQL. Проект GraphiQL облегчает взаимодействие с API, использующим GraphQL.'],
-  [KEYS.ABOUT_COURSE_DESCRIPTION, 'RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013.', 'RS School — это бесплатная образовательная программа, проводимая сообществом разработчиков The Rolling Scopes с 2013 года.'],
+  [
+    KEYS.ABOUT_PROJECT_DESCRIPTION,
+    'This application was created as part of training at RS School. GraphiQL is a powerful tool for working with the GraphQL query language. It is an interactive web environment designed to create, debug, and test GraphQL queries. The GraphiQL project makes it easy to interact with an API that uses GraphQL.',
+    'Это приложение создано в рамках обучения в RS School. GraphiQL представляет собой мощный инструмент для работы с языком запросов GraphQL. Это интерактивная веб-среда, предназначенная для создания, отладки и тестирования запросов GraphQL. Проект GraphiQL облегчает взаимодействие с API, использующим GraphQL.',
+  ],
+  [
+    KEYS.ABOUT_COURSE_DESCRIPTION,
+    'RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013.',
+    'RS School — это бесплатная образовательная программа, проводимая сообществом разработчиков The Rolling Scopes с 2013 года.',
+  ],
 ];
 export const text: Keys<Locales> = textInit.reduce(setText, {} as Keys<Locales>) as Keys<Locales>;

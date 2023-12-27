@@ -2,7 +2,7 @@ import { Fragment, useContext, useEffect, useState } from 'react';
 import { Button, Modal, Row, Col } from 'antd';
 import { getText, KEYS as TEXT } from '../locales/text';
 import { Context } from '../store/context';
-import AuthForm from './AuthForm';
+import AuthForm from './AuthForm/AuthForm';
 import { auth as firebaseAuth } from '../firebase/firebase';
 import { useAuth } from '../firebase/hooks/useAuth';
 import { ButtonType } from 'antd/lib/button/buttonHelpers';
@@ -42,6 +42,7 @@ export default function Auth() {
               <Button
                 key={`auth-button-${index}`}
                 type={type}
+                shape="round"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
                 onClick={() => {
                   setMethod(actionMethod);

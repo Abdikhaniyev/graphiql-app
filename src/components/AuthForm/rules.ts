@@ -25,6 +25,9 @@ export const EMAIL_RULES: ExtendedRule[] = [
 ];
 export const PASSWORD_RULES: ExtendedRule[] = [
   {
+    messageKey: MESSAGES.PASSWORD_RULE2,
+  },
+  {
     required: true,
     messageKey: MESSAGES.PASSWORD_REQUIRED,
   },
@@ -37,12 +40,15 @@ export const PASSWORD_RULES: ExtendedRule[] = [
       const isOk = !(value !== value.trim());
       return isOk
         ? Promise.resolve()
-        : Promise.reject(new Error(getMessage(MESSAGES.PASSWORD_RULE2)));
+        : Promise.reject(new Error(Object(PASSWORD_RULES[0]).message ?? ''));
     },
   }),
 ];
 
 export const CONFIRM_PASSWORD_RULES: ExtendedRule[] = [
+  {
+    messageKey: MESSAGES.PASSWORD_CONFIRM_RULE,
+  },
   {
     required: true,
     messageKey: MESSAGES.PASSWORD_CONFIRM_REQUIRED,
@@ -52,7 +58,7 @@ export const CONFIRM_PASSWORD_RULES: ExtendedRule[] = [
       const isOk = !value || getFieldValue('password') === value;
       return isOk
         ? Promise.resolve()
-        : Promise.reject(new Error(getMessage(MESSAGES.PASSWORD_CONFIRM_RULE)));
+        : Promise.reject(new Error(Object(CONFIRM_PASSWORD_RULES[0]).message ?? ''));
     },
   }),
 ];
@@ -75,14 +81,19 @@ export const ruleLocale = (
   ruleKey: RULES,
   locale: LOCALES
 ): void => {
-  Object.values(extendedRules[ruleKey]).forEach((value) => {
-    const { messageKey } = value;
-    value.message = getMessage(messageKey, locale);
-  });
+  const values = Object.values(extendedRules[ruleKey] ?? {});
+  // console.log(values, extendedRules, ruleKey, locale);
+  if (values) {
+    values.forEach((value) => {
+      const { messageKey } = value;
+      value.message = getMessage(messageKey, locale);
+    });
+  }
 };
 
 export const updateRuleLocale = (definedRules: RULES[], locale: LOCALES) => {
   definedRules.forEach((ruleKey) => {
-    ruleLocale(rules as ExtendedRule[], ruleKey, locale);
+    // console.log(rules, ruleKey, locale);
+    if (rules) ruleLocale(rules as ExtendedRule[], ruleKey, locale);
   });
 };

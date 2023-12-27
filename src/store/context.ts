@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import type { Dispatch, SetStateAction } from 'react';
-import { KEYS as LOCALES } from '../locales/locales';
+import { LOCALES } from '../locales/locales';
 
 export type ContextType = {
   locale: LOCALES;

@@ -1,4 +1,4 @@
-import { KEYS as LOCALES, Keys as Locales } from './locales';
+import { LOCALES, Locales, setRelation } from './locales';
 
 export enum KEYS {
   EMPTY = 0,
@@ -13,21 +13,26 @@ export enum KEYS {
   DEFAULT = EMPTY,
 }
 export type Keys<T = string> = Partial<Record<KEYS, T>>;
-export const text: Keys<Locales> = {
-  [KEYS.EMPTY]: { [LOCALES.EN]: '', [LOCALES.RU]: '' },
+export type Text = [KEYS, string, string];
 
-  [KEYS.RUSSIAN]: { [LOCALES.EN]: 'Russian', [LOCALES.RU]: 'Русский' },
-  [KEYS.ENGLISH]: { [LOCALES.EN]: 'English', [LOCALES.RU]: 'Английский' },
-
-  [KEYS.SIGN_IN]: { [LOCALES.EN]: 'Sign in', [LOCALES.RU]: 'Войти' },
-  [KEYS.SIGN_UP]: { [LOCALES.EN]: 'Sign up', [LOCALES.RU]: 'Регистрация' },
-  [KEYS.SIGN_OUT]: { [LOCALES.EN]: 'Sign out', [LOCALES.RU]: 'Выйти' },
-
-  [KEYS.EMAIL]: { [LOCALES.EN]: 'Email', [LOCALES.RU]: 'Почта' },
-  [KEYS.PASSWORD]: { [LOCALES.EN]: 'Password', [LOCALES.RU]: 'Пароль' },
-  [KEYS.PASSWORD_CONFIRM]: { [LOCALES.EN]: 'Password Confirm', [LOCALES.RU]: 'Подтвердите пароль' },
-};
 export const getText = (key = KEYS.EMPTY, locale = LOCALES.DEFAULT) => {
   const textProp = text[key] ?? '';
   return textProp[locale] ?? '';
 };
+
+const setText = setRelation<Keys<Locales>>();
+export const textInit: Text[] = [
+  [KEYS.EMPTY, '', ''],
+
+  [KEYS.RUSSIAN, 'Russian', 'Русский'],
+  [KEYS.ENGLISH, 'English', 'Английский'],
+  [KEYS.SIGN_IN, 'Sign in', 'Войти'],
+  [KEYS.SIGN_UP, 'Sign up', 'Регистрация'],
+  [KEYS.SIGN_OUT, 'Sign out', 'Выйти'],
+
+  [KEYS.EMAIL, 'Email', 'Электронная Почта'],
+
+  [KEYS.PASSWORD, 'Password', 'Пароль'],
+  [KEYS.PASSWORD_CONFIRM, 'Password Confirm', 'Подтвердите пароль'],
+];
+export const text: Keys<Locales> = textInit.reduce(setText, {} as Keys<Locales>) as Keys<Locales>;

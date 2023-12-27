@@ -1,5 +1,6 @@
 import { useRoutes } from 'react-router-dom';
 import AppLayout from '../layouts';
+import * as Pages from '../pages';
 
 export default function Routes() {
   return useRoutes([
@@ -9,7 +10,7 @@ export default function Routes() {
       children: [
         {
           index: true,
-          element: <div>home</div>,
+          element: <Pages.Welcome />,
         },
       ],
     },

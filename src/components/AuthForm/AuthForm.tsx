@@ -20,7 +20,7 @@ const LoginForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS
   const login = async () => {
     const { email, password }: SignInForm = loginForm.getFieldsValue();
     try {
-      authMethod(email, password);
+      await authMethod(email, password);
       onFinish();
     } catch (e) {
       console.log('Credential error', e);

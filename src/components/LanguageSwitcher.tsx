@@ -1,15 +1,19 @@
+import { useContext } from 'react';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { Icon } from '@iconify/react';
-import { useContext } from 'react';
 import { Context } from '../store/context';
 import { getText, KEYS as TEXT } from '../locales/text';
-import { KEYS as LOCALES } from '../locales/locales';
+import { LOCALES } from '../locales/locales';
 
 import type { TextIcon } from './LanguageSwitcher.d';
-
+enum MENU_LIST {
+  LOCALES,
+  TEXT,
+  ICON,
+}
 const menuText: TextIcon[] = [
-  [LOCALES.RU, TEXT.RUSSIAN, 'flag-for-russia'],
   [LOCALES.EN, TEXT.ENGLISH, 'flag-for-united-states'],
+  [LOCALES.RU, TEXT.RUSSIAN, 'flag-for-russia'],
 ];
 
 export default function LanguageSwitcher() {
@@ -34,7 +38,7 @@ export default function LanguageSwitcher() {
         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
         <Icon icon="material-symbols:translate" width={16} height={16} />
-        {getText(menuText[locale][1], locale)}
+        {getText(menuText[locale][MENU_LIST.TEXT], locale)}
       </Button>
     </Dropdown>
   );

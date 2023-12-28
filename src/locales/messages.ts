@@ -13,6 +13,8 @@ export enum MESSAGES {
   PASSWORD_CONFIRM,
   PASSWORD_CONFIRM_REQUIRED,
   PASSWORD_CONFIRM_RULE,
+
+  AUTH_ERROR,
   DEFAULT = EMPTY,
 }
 export type Messages<T = string> = Partial<Record<MESSAGES, T>>;
@@ -52,5 +54,6 @@ export const message: Messages<Locales> = (
       'Подтвердите ваш пароль!',
     ],
     [MESSAGES.PASSWORD_CONFIRM_RULE, `Passwords don't match`, 'Пароли не совпадают'],
+    [MESSAGES.AUTH_ERROR, `Authorization error:`, 'Ошибка авторизации'],
   ] as Message[]
 ).reduce(setMessage, {} as Messages<Locales>) as Messages<Locales>;

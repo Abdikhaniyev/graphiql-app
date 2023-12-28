@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Context, defaultContext } from './store/context';
-import { Routes } from './components';
+import { Router } from './components';
 import { ConfigProvider } from 'antd';
 import antConfig from './antConfig';
 import { locales } from './locales/locales';
@@ -17,7 +17,7 @@ function App() {
           ...antConfig,
         }}
       >
-        <Routes />;
+        <Router />;
       </ConfigProvider>
     </Context.Provider>
   );

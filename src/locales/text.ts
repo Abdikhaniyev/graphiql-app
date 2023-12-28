@@ -11,6 +11,7 @@ export enum KEYS {
   PASSWORD,
   PASSWORD_CONFIRM,
   HOME,
+  PLAYGROUND,
   OUR_TEAM,
   ABOUT_PROJECT,
   ABOUT_PROJECT_DESCRIPTION,
@@ -41,6 +42,7 @@ export const textInit: Text[] = [
   [KEYS.PASSWORD_CONFIRM, 'Password Confirm', 'Подтвердите пароль'],
 
   [KEYS.HOME, 'Home', 'Главная'],
+  [KEYS.PLAYGROUND, 'Playground', 'Песочница'],
   [KEYS.OUR_TEAM, 'Our team', 'Наша команда'],
   [KEYS.ABOUT_PROJECT, 'About project', 'О проекте'],
   [

@@ -17,7 +17,7 @@ function App() {
           ...antConfig,
         }}
       >
-        <Routes />;
+        <Routes />
       </ConfigProvider>
     </Context.Provider>
   );

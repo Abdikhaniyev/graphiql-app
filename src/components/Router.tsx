@@ -1,6 +1,7 @@
 import { useRoutes } from 'react-router-dom';
 import AppLayout from '../layouts';
 import * as Pages from '../pages';
+import { PrivateRoute } from '.';
 
 export default function Routes() {
   return useRoutes([
@@ -11,6 +12,16 @@ export default function Routes() {
         {
           index: true,
           element: <Pages.Welcome />,
+        },
+        {
+          path: 'playground',
+          element: <PrivateRoute />,
+          children: [
+            {
+              index: true,
+              element: <></>,
+            },
+          ],
         },
       ],
     },

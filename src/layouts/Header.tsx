@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Layout, Row, Col } from 'antd';
-import { Link } from 'react-router-dom';
 import { LanguageSwitcher } from '../components';
 import { Auth } from '../components';
+import Menu from './Menu';
 
 const { Header } = Layout;
 
@@ -29,12 +29,12 @@ export default function LayoutHeader() {
         transition: 'background 200ms ease-in',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center',
+        alignItems: 'start',
+        paddingTop: '16px',
         zIndex: 1000,
       }}
     >
-      <Link to="/">Welcome page</Link>
-      <Link to="/playground">Playground</Link>
+      <Menu />
       <Row gutter={[8, 8]}>
         <Col>
           <LanguageSwitcher />

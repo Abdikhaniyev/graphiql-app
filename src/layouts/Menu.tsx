@@ -50,7 +50,7 @@ export default function Menu() {
               {text}
             </Text>
           ) : (
-            <Link to={menuKey} style={{ borderBottom, padding: '0px' }}>
+            <Link to={menuKey} style={{ borderBottom, padding: '8px' }}>
               <Icon style={{ padding: '8px' }} />
               {text}
             </Link>

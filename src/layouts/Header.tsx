@@ -34,6 +34,7 @@ export default function LayoutHeader() {
       }}
     >
       <Link to="/">Welcome page</Link>
+      <Link to="/playground">Playground</Link>
       <Row gutter={[8, 8]}>
         <Col>
           <LanguageSwitcher />

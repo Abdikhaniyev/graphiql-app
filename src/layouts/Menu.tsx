@@ -45,7 +45,10 @@ export default function Menu() {
         const Icon = icons[iconKey];
         const MenuItem =
           isPrivate && !isLogged ? (
-            <Text disabled>{text} </Text>
+            <Text disabled>
+              <Icon style={{ padding: '8px' }} />
+              {text}
+            </Text>
           ) : (
             <Link to={menuKey} style={{ borderBottom, padding: '0px' }}>
               <Icon style={{ padding: '8px' }} />

@@ -19,7 +19,7 @@ export default function Routes() {
           children: [
             {
               index: true,
-              element: <></>,
+              element: <Pages.GraphiQL />,
             },
           ],
         },

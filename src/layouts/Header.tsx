@@ -29,9 +29,12 @@ export default function LayoutHeader() {
         transition: 'background 200ms ease-in',
         display: 'flex',
         justifyContent: 'space-between',
+        flexFlow: 'row wrap',
+        rowGap: '4px',
         alignItems: 'start',
-        paddingTop: '16px',
+        padding: '16px 32px 16px 32px',
         zIndex: 1000,
+        height: 'auto',
       }}
     >
       <Menu />

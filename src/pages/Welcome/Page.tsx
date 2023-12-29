@@ -86,7 +86,7 @@ export default function Welcome() {
   ];
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16, 16]} style={{ display: 'flex' }}>
       <Col xs={24} sm={24} md={12} order={md ? 1 : 2}>
         <Row gutter={[8, 8]}>
           <Col xs={24}>

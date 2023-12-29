@@ -47,7 +47,11 @@ export default function Auth() {
                 key={`auth-button-${index}`}
                 type={type}
                 shape="round"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 onClick={() => {
                   setMethod(actionMethod);
                   action();

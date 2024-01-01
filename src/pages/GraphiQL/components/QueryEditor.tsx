@@ -68,7 +68,6 @@ export default function QueryEditor({ value, onChange, readOnly, ...props }: Que
         value={value}
         onChange={onChange}
         height="80vh"
-        placeholder={!readOnly ? 'Enter your query here' : ''}
         editable={!readOnly}
         readOnly={readOnly}
         theme={readOnly ? readOnlyTheme : defaultTheme}

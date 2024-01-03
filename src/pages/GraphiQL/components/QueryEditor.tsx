@@ -8,7 +8,7 @@ const { useToken } = theme;
 
 interface QueryEditorProps extends ReactCodeMirrorProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
   readOnly?: boolean;
 }
 
@@ -39,10 +39,12 @@ export default function QueryEditor({ value, onChange, readOnly, ...props }: Que
   });
 
   const clear = useCallback(() => {
+    if (!onChange) return;
     onChange('');
   }, [onChange]);
 
   const formatGraphQL = useCallback((value: string) => {
+    if (!onChange) return;
     let indentation = 0;
     let formatted = '';
     value = value.replaceAll('\t', '').replaceAll(' ', '');

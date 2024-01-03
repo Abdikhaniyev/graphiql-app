@@ -82,7 +82,6 @@ export const ruleLocale = (
   locale: LOCALES
 ): void => {
   const values = Object.values(extendedRules[ruleKey] ?? {});
-  // console.log(values, extendedRules, ruleKey, locale);
   if (values) {
     values.forEach((value) => {
       const { messageKey } = value;
@@ -93,7 +92,6 @@ export const ruleLocale = (
 
 export const updateRuleLocale = (definedRules: RULES[], locale: LOCALES) => {
   definedRules.forEach((ruleKey) => {
-    // console.log(rules, ruleKey, locale);
     if (rules) ruleLocale(rules as ExtendedRule[], ruleKey, locale);
   });
 };

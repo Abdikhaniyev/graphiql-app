@@ -1,19 +1,25 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../store/context';
-import { Form } from 'antd';
+import { Form, Typography } from 'antd';
 import { auth as firebaseAuth } from '../../firebase/firebase';
 import { useAuth } from '../../firebase/hooks/useAuth';
 import { SignInForm } from './AuthForm.d';
 import { KEYS as METHODS } from '../../firebase/methods/methods';
 import { getText, KEYS as TEXT } from '../../locales/text';
+import { getMessage, MESSAGES } from '../../locales/messages';
 import { rules, RULES, updateRuleLocale } from './rules';
 import { emailForm, passwordForm, passwordConfirmForm, submitButtonForm } from './forms';
 
+const { Text } = Typography;
 const definedRules = [RULES.EMAIL, RULES.PASSWORD, RULES.PASSWORD_CONFIRM];
 const LoginForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS }) => {
   const [loginForm] = Form.useForm();
   const { locale } = useContext(Context);
-  const [user, , , authMethod] = useAuth(firebaseAuth, method);
+  const [user, loading, error, authMethod] = useAuth(firebaseAuth, method);
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    if (loading) setMessage('');
+  }, [loading]);
   useEffect(() => {
     updateRuleLocale(definedRules, locale);
   }, [locale]);
@@ -21,9 +27,10 @@ const LoginForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS
     const { email, password }: SignInForm = loginForm.getFieldsValue();
     try {
       await authMethod(email, password);
+      setMessage('');
       onFinish();
     } catch (e) {
-      console.log('Credential error', e);
+      setMessage(e as string);
     }
   };
   const labelSubmit = getText(method === METHODS.SIGN_UP ? TEXT.SIGN_UP : TEXT.SIGN_IN, locale);
@@ -43,6 +50,11 @@ const LoginForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS
             rules: rules[RULES.PASSWORD_CONFIRM],
             placeholder: getText(TEXT.PASSWORD_CONFIRM, locale),
           })}
+        {(error ?? message) && (
+          <Text type="danger">{`${getMessage(MESSAGES.AUTH_ERROR, locale)} ${
+            error ?? message
+          }`}</Text>
+        )}
         {submitButtonForm({ labelSubmit })}
       </Form>
     </>

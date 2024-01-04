@@ -3,9 +3,16 @@ import { QueryState } from './QuerySlice.d';
 
 const initialState: QueryState = {
   endpoint: localStorage.getItem('gql-endpoint') || 'https://rickandmortyapi.com/graphql',
-  query: '',
-  variables: '',
-  headers: '',
+  query: `query GetCharacters  ($page: Int = 1) {
+    characters(page: $page) {
+      results {
+        name
+      }
+    }
+  }
+  `,
+  variables: '{"page": 1}',
+  headers: '{"test": "test"}',
   result: '',
 };
 

@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react';
 import { Button, Flex, Input, Typography } from 'antd';
 import { ChangeEvent, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../redux/store';
 import { setEndpoint } from '../../../redux/slices/QuerySlice';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
 
 export default function EndpointEditor() {
   const [editing, setEditing] = useState(false);

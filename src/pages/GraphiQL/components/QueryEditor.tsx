@@ -10,9 +10,16 @@ interface QueryEditorProps extends ReactCodeMirrorProps {
   value: string;
   onChange?: (value: string) => void;
   readOnly?: boolean;
+  onClickRun?: () => void;
 }
 
-export default function QueryEditor({ value, onChange, readOnly, ...props }: QueryEditorProps) {
+export default function QueryEditor({
+  value,
+  onChange,
+  readOnly,
+  onClickRun,
+  ...props
+}: QueryEditorProps) {
   const { token } = useToken();
   const readOnlyTheme = createTheme({
     theme: 'light',
@@ -45,7 +52,7 @@ export default function QueryEditor({ value, onChange, readOnly, ...props }: Que
 
   const formatGraphQL = useCallback((value: string) => {
     if (!onChange) return;
-    let indentation = 0;
+    let indentation = 1;
     let formatted = '';
     value = value.replaceAll('\t', '').replaceAll(' ', '');
 
@@ -81,6 +88,13 @@ export default function QueryEditor({ value, onChange, readOnly, ...props }: Que
       />
       {!readOnly && (
         <Flex vertical gap={8}>
+          {onClickRun && (
+            <Button
+              type="primary"
+              icon={<Icon width="20" icon={'fluent:play-16-regular'} />}
+              onClick={onClickRun}
+            />
+          )}
           <Button
             icon={<Icon width="20" icon={'fluent:text-grammar-wand-16-regular'} />}
             onClick={() => {

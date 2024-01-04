@@ -29,6 +29,7 @@
     "antd": "^5.12.2",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
+    "lodash.debounce": "^4.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

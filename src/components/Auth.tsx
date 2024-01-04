@@ -1,3 +1,4 @@
+import { testNode } from '../tests/testNode';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { Button, Modal, Row, Col } from 'antd';
 import { getText, KEYS as TEXT } from '../locales/text';
@@ -56,6 +57,7 @@ export default function Auth() {
                   setMethod(actionMethod);
                   action();
                 }}
+                {...testNode(`auth-button-${index}`)}
               >
                 {text}
               </Button>

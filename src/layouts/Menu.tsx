@@ -38,7 +38,6 @@ export default function Menu() {
       }}
     >
       {menu.map(([menuKey, textKey, iconKey]: Menu) => {
-        console.log(iconKey);
         const text = getText(textKey, locale);
         const isPrivate = privateRoutes.indexOf(menuKey as ROUTES) >= 0;
         const borderBottom = pathname === menuKey ? 'solid' : 'none';

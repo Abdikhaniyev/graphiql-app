@@ -1,6 +1,7 @@
 import type { ExtendedRule, Validator } from './AuthForm.d';
 import { getMessage, MESSAGES } from '../../locales/messages';
 import { LOCALES, setRelation } from '../../locales/locales';
+import { isTest } from '../../tests/testNode';
 
 export enum RULES {
   EMPTY = 0,
@@ -38,9 +39,8 @@ export const PASSWORD_RULES: ExtendedRule[] = [
   () => ({
     validator(_, value: string) {
       const isOk = !(value !== value.trim());
-      return isOk
-        ? Promise.resolve()
-        : Promise.reject(new Error(Object(PASSWORD_RULES[0]).message ?? ''));
+      const error = Object(PASSWORD_RULES[0]).message ?? '';
+      return isOk ? Promise.resolve() : Promise.reject(isTest ? error : new Error(error));
     },
   }),
 ];
@@ -56,9 +56,8 @@ export const CONFIRM_PASSWORD_RULES: ExtendedRule[] = [
   ({ getFieldValue }: Validator) => ({
     validator(_, value: string) {
       const isOk = !value || getFieldValue('password') === value;
-      return isOk
-        ? Promise.resolve()
-        : Promise.reject(new Error(Object(CONFIRM_PASSWORD_RULES[0]).message ?? ''));
+      const error = Object(CONFIRM_PASSWORD_RULES[0]).message ?? '';
+      return isOk ? Promise.resolve() : Promise.reject(isTest ? error : new Error(error));
     },
   }),
 ];

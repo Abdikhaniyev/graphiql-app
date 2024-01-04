@@ -1,3 +1,4 @@
+import { testNode } from '../tests/testNode';
 import { Layout } from 'antd';
 
 const { Sider } = Layout;
@@ -16,6 +17,7 @@ export default function LayoutSidebar() {
         bottom: 0,
         borderRight: '1px solid #0505050f',
       }}
+      {...testNode('sidebar')}
     >
       Sidebar
     </Sider>

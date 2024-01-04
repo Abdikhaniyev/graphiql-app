@@ -1,3 +1,5 @@
+import { testNode } from '../../tests/testNode';
+
 export default function Playground() {
-  return <></>;
+  return <div {...testNode('playground')}></div>;
 }

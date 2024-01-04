@@ -1,3 +1,4 @@
+import { testNode } from '../tests/testNode';
 import { useEffect, useState } from 'react';
 import { Layout, Row, Col } from 'antd';
 import { LanguageSwitcher } from '../components';
@@ -39,7 +40,7 @@ export default function LayoutHeader() {
     >
       <Menu />
       <Row gutter={[8, 8]}>
-        <Col>
+        <Col {...testNode('language-header')}>
           <LanguageSwitcher />
         </Col>
         <Col>

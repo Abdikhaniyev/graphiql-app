@@ -1,3 +1,4 @@
+import { testNode } from '../tests/testNode';
 import { Spin, message } from 'antd';
 import { User, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState, useContext } from 'react';
@@ -33,7 +34,13 @@ export default function PrivateRoute() {
   }
 
   return (
-    <Spin size="large" tip="Loading" spinning={loading} style={{ minHeight: '90vh' }}>
+    <Spin
+      size="large"
+      tip="Loading"
+      spinning={loading}
+      style={{ minHeight: '90vh' }}
+      {...testNode('private-route-loading')}
+    >
       <Outlet />
     </Spin>
   );

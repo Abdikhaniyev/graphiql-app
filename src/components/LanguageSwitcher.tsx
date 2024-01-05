@@ -1,3 +1,4 @@
+import { testNode } from '../tests/testNode';
 import { useContext } from 'react';
 import { Button, Dropdown, MenuProps } from 'antd';
 import { Icon } from '@iconify/react';
@@ -27,15 +28,17 @@ export default function LanguageSwitcher() {
       label: getText(textKey, locale),
       key: `${localeKey ?? ''}`,
       icon: <Icon icon={`emojione:${icon}`} />,
+      ...testNode(`language-${localeKey}`),
     };
   });
 
   return (
-    <Dropdown menu={{ items: items, onClick }} trigger={['click']}>
+    <Dropdown menu={{ items: items, onClick }} trigger={['click']} {...testNode('language-menu')}>
       <Button
         type="primary"
         shape="round"
         style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        {...testNode('language-switcher')}
       >
         <Icon icon="material-symbols:translate" width={16} height={16} />
         {getText(menuText[locale][MENU_LIST.TEXT], locale)}

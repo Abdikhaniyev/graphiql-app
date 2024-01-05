@@ -1,3 +1,4 @@
+import { testNode } from '../../tests/testNode';
 import { Card, Col, Grid, Row, Typography } from 'antd';
 import { useContext } from 'react';
 import { KEYS as TEXT, getText } from '../../locales/text';
@@ -86,7 +87,7 @@ export default function Welcome() {
   ];
 
   return (
-    <Row gutter={[16, 16]}>
+    <Row gutter={[16, 16]} style={{ display: 'flex' }} {...testNode('welcome')}>
       <Col xs={24} sm={24} md={12} order={md ? 1 : 2}>
         <Row gutter={[8, 8]}>
           <Col xs={24}>

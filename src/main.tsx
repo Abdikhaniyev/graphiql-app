@@ -1,6 +1,6 @@
 import 'antd/dist/reset.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { StrictMode } from 'react';
+import ReactDOM, { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
@@ -9,8 +9,8 @@ import { setupStore } from './redux/store.ts';
 
 const store = setupStore();
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+const reactElement = (
+  <StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <Context.Provider value={defaultContext}>
@@ -18,5 +18,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </Context.Provider>
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>
+  </StrictMode>
 );
+const root = document.getElementById('root') ?? document.createElement('div');
+createRoot(root).render(reactElement);
+
+export { reactElement, root };

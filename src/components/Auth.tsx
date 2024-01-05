@@ -1,3 +1,4 @@
+import { testNode } from '../tests/testNode';
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { Button, Modal, Row, Col } from 'antd';
 import { getText, KEYS as TEXT } from '../locales/text';
@@ -7,12 +8,15 @@ import { auth as firebaseAuth } from '../firebase/firebase';
 import { useAuth } from '../firebase/hooks/useAuth';
 import { ButtonType } from 'antd/lib/button/buttonHelpers';
 import { KEYS as METHODS } from '../firebase/methods/methods';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../routes/routes';
 
 export default function Auth() {
   const [open, setOpen] = useState(false);
   const [method, setMethod] = useState<METHODS>(METHODS.NOTHING);
   const [user, , , authMethod] = useAuth(firebaseAuth, method);
   const { locale } = useContext(Context);
+  const navigate = useNavigate();
   const showModal = () => {
     setOpen(true);
   };
@@ -29,6 +33,7 @@ export default function Auth() {
     if (method === METHODS.SIGN_OUT) {
       authMethod('', '');
       setMethod(METHODS.NOTHING);
+      navigate(ROUTES.DEFAULT);
     }
   }, [method]);
 
@@ -43,11 +48,16 @@ export default function Auth() {
                 key={`auth-button-${index}`}
                 type={type}
                 shape="round"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
                 onClick={() => {
                   setMethod(actionMethod);
                   action();
                 }}
+                {...testNode(`auth-button-${index}`)}
               >
                 {text}
               </Button>

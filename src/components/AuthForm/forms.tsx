@@ -1,3 +1,4 @@
+import { testNode } from '../../tests/testNode';
 import { Form, Input, Button } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import type { ExtendedRule } from './AuthForm.d';
@@ -26,6 +27,7 @@ export const emailForm = ({ rules, placeholder }: ItemForm) => {
         prefix={<UserOutlined className="site-form-item-icon" />}
         autoComplete="email"
         placeholder={placeholder}
+        {...testNode('input-email')}
       />
     </Form.Item>
   );
@@ -39,6 +41,7 @@ export const passwordForm = ({ rules, placeholder }: ItemForm) => {
         type="password"
         autoComplete="current-password"
         placeholder={placeholder}
+        {...testNode('input-password')}
       />
     </Form.Item>
   );
@@ -52,6 +55,7 @@ export const passwordConfirmForm = ({ rules, placeholder }: ItemForm) => {
         type="password"
         autoComplete="new-password"
         placeholder={placeholder}
+        {...testNode('input-password-confirm')}
       />
     </Form.Item>
   );
@@ -65,6 +69,7 @@ export const submitButtonForm = ({ labelSubmit }: ItemForm) => {
         type="primary"
         htmlType="submit"
         className="login-form-button"
+        {...testNode('button-submit')}
       >
         {labelSubmit}
       </Button>

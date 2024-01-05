@@ -5,7 +5,7 @@ import { RULES, updateRuleLocale, rules } from '../../components/AuthForm/rules'
 import { LOCALES } from '../../locales/locales';
 import { MESSAGES, getMessage } from '../../locales/messages';
 import { FormInstance } from 'antd';
-import { ExtendedRule } from '../../components/AuthForm/AuthForm.d';
+import type { ExtendedRule } from '../../components/AuthForm/AuthForm.d';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

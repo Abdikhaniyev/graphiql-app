@@ -1,17 +1,23 @@
 import '@testing-library/jest-dom';
 import { describe, expect, test, vi, afterEach } from 'vitest';
 import { cleanup, render, screen, waitFor, fireEvent } from '@testing-library/react';
-import AppRoutes from '../../components/Router';
+import AppRoutes from '../../components/Router.tsx';
 import { MemoryRouter } from 'react-router-dom';
 import {
   emailForm,
   passwordForm,
   passwordConfirmForm,
   submitButtonForm,
-} from '../../components/AuthForm/forms';
-import { method, KEYS } from '../../firebase/methods/methods';
-import { auth } from '../../firebase/firebase';
+} from '../../components/AuthForm/forms.tsx';
+import { method, KEYS } from '../../firebase/methods/methods.ts';
+import { auth } from '../../firebase/firebase.ts';
 import React from 'react';
+
+import { setupStore } from '../../redux/store.ts';
+import { Provider } from 'react-redux';
+import { Context, defaultContext } from '../../store/context.ts';
+
+const store = setupStore();
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -29,7 +35,11 @@ Object.defineProperty(window, 'matchMedia', {
 
 const route = (init: string) => (
   <MemoryRouter initialEntries={[init]}>
-    <AppRoutes />
+    <Provider store={store}>
+      <Context.Provider value={defaultContext}>
+        <AppRoutes />
+      </Context.Provider>
+    </Provider>
   </MemoryRouter>
 );
 

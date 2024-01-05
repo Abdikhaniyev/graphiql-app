@@ -1,4 +1,3 @@
-import { javascript } from '@codemirror/lang-javascript';
 import { Icon } from '@iconify/react';
 import { materialLightInit } from '@uiw/codemirror-theme-material';
 import CodeMirror, { ReactCodeMirrorProps } from '@uiw/react-codemirror';
@@ -66,7 +65,7 @@ export default function QueryEditor({
   }, []);
 
   return (
-    <Flex gap={8} style={{ width: '100%' }}>
+    <Flex gap={8} style={{ width: '100%', flex: 1 }}>
       <CodeMirror
         value={value}
         onChange={onChange}
@@ -74,7 +73,6 @@ export default function QueryEditor({
         editable={!readOnly}
         readOnly={readOnly}
         theme={readOnly ? readOnlyTheme : defaultTheme}
-        extensions={[javascript({ jsx: true })]}
         {...props}
         style={{
           flex: '1',

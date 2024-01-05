@@ -10,7 +10,7 @@ export default function AppRoutes() {
       <Route path={ROUTES.HOME} element={<AppLayout />}>
         <Route path={ROUTES.HOME} element={<Pages.Welcome />} />
         <Route path={ROUTES.PLAYGROUND} element={<PrivateRoute />}>
-          <Route path={ROUTES.PLAYGROUND} element={<Pages.Playground />} />
+          <Route path={ROUTES.PLAYGROUND} element={<Pages.GraphiQL />} />
         </Route>
       </Route>
       <Route path={ROUTES.NOT_FOUND} element={<Navigate replace to={ROUTES.DEFAULT} />}></Route>

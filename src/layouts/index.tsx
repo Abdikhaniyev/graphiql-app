@@ -1,11 +1,14 @@
-import { Layout } from 'antd';
+import { Grid, Layout } from 'antd';
 import LayoutHeader from './Header';
 import { Outlet } from 'react-router-dom';
 import LayoutFooter from './Footer';
 
 const { Content } = Layout;
+const { useBreakpoint } = Grid;
 
 export default function AppLayout() {
+  const { md } = useBreakpoint();
+
   const layoutStyle = {
     minHeight: '100vh',
   };
@@ -13,7 +16,7 @@ export default function AppLayout() {
   const contentStyle = {
     width: '100%',
     margin: '16px 0',
-    padding: '0 50px',
+    padding: md ? '0 50px' : '0 16px',
   };
 
   return (

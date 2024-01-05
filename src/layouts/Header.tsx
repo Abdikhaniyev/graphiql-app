@@ -1,13 +1,13 @@
-import { testNode } from '../tests/testNode';
+import { Flex, Grid, Layout } from 'antd';
 import { useEffect, useState } from 'react';
-import { Layout, Row, Col } from 'antd';
-import { LanguageSwitcher } from '../components';
-import { Auth } from '../components';
+import { Auth, LanguageSwitcher } from '../components';
 import Menu from './Menu';
 
 const { Header } = Layout;
+const { useBreakpoint } = Grid;
 
 export default function LayoutHeader() {
+  const { md } = useBreakpoint();
   const [background, setBackground] = useState('transparent');
 
   const handleScroll = () => {
@@ -32,22 +32,17 @@ export default function LayoutHeader() {
         justifyContent: 'space-between',
         flexFlow: 'row wrap',
         rowGap: '4px',
-        alignItems: 'start',
-        padding: '16px 32px 16px 32px',
+        alignItems: 'flex-end',
+        padding: md ? '16px 32px' : '0 16px',
         zIndex: 1000,
         height: 'auto',
       }}
     >
       <Menu />
-      <Row gutter={[8, 8]}>
-        <Col {...testNode('language-header')}>
-          <LanguageSwitcher />
-        </Col>
-        <Col>
-          <Auth />
-        </Col>
-      </Row>
-      {/* user menu */}
+      <Flex gap={8} wrap="wrap">
+        <LanguageSwitcher />
+        <Auth />
+      </Flex>
     </Header>
   );
 }

@@ -1,34 +1,59 @@
-import { testNode } from '../tests/testNode';
-import { Fragment, useContext, useEffect, useState } from 'react';
-import { Button, Modal, Row, Col } from 'antd';
-import { getText, KEYS as TEXT } from '../locales/text';
-import { Context } from '../store/context';
-import AuthForm from './AuthForm/AuthForm';
+import { Icon } from '@iconify/react';
+import { Avatar, Button, Dropdown, Grid, MenuProps, Modal, Typography } from 'antd';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { auth as firebaseAuth } from '../firebase/firebase';
 import { useAuth } from '../firebase/hooks/useAuth';
-import { ButtonType } from 'antd/lib/button/buttonHelpers';
 import { KEYS as METHODS } from '../firebase/methods/methods';
-import { useNavigate } from 'react-router-dom';
+import { KEYS as TEXT, getText } from '../locales/text';
 import { ROUTES } from '../routes/routes';
+import { Context } from '../store/context';
+import { testNode } from '../tests/testNode';
+import AuthForm from './AuthForm/AuthForm';
+
+const { useBreakpoint } = Grid;
 
 export default function Auth() {
+  const { md } = useBreakpoint();
   const [open, setOpen] = useState(false);
   const [method, setMethod] = useState<METHODS>(METHODS.NOTHING);
   const [user, , , authMethod] = useAuth(firebaseAuth, method);
   const { locale } = useContext(Context);
   const navigate = useNavigate();
+
   const showModal = () => {
     setOpen(true);
   };
+
   const handleCancel = () => {
     setOpen(false);
   };
-  const authLabels: [string, boolean, ButtonType, () => void, METHODS][] = [
-    [user?.email ?? '', !!user, 'text', () => {}, METHODS.NOTHING],
-    [getText(TEXT.SIGN_IN, locale), !user, 'primary', showModal, METHODS.SIGN_IN],
-    [getText(TEXT.SIGN_UP, locale), !user, 'primary', showModal, METHODS.SIGN_UP],
-    [getText(TEXT.SIGN_OUT, locale), !!user, 'primary', handleCancel, METHODS.SIGN_OUT],
+
+  const authButtons: { label: string; action: () => void; method: METHODS }[] = [
+    {
+      label: getText(TEXT.SIGN_IN, locale),
+      action: showModal,
+      method: METHODS.SIGN_IN,
+    },
+    {
+      label: getText(TEXT.SIGN_UP, locale),
+      action: showModal,
+      method: METHODS.SIGN_UP,
+    },
   ];
+
+  const userMenu: MenuProps['items'] = [
+    {
+      key: 'auth-button-3',
+      label: getText(TEXT.SIGN_OUT, locale),
+      icon: <Icon icon="ant-design:logout-outlined" />,
+      onClick: () => {
+        setMethod(METHODS.SIGN_OUT);
+        handleCancel();
+      },
+    },
+  ];
+
   useEffect(() => {
     if (method === METHODS.SIGN_OUT) {
       authMethod('', '');
@@ -39,32 +64,35 @@ export default function Auth() {
 
   return (
     <>
-      <Row gutter={[8, 8]}>
-        {authLabels.map(([text, condition, type, action, actionMethod], index) => {
-          if (!condition) return <Fragment key={`fragment-${index}`}></Fragment>;
+      {!user &&
+        authButtons.map(({ label, action, method }, index) => {
           return (
-            <Col key={`auth-col-${index}`}>
-              <Button
-                key={`auth-button-${index}`}
-                type={type}
-                shape="round"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-                onClick={() => {
-                  setMethod(actionMethod);
-                  action();
-                }}
-                {...testNode(`auth-button-${index}`)}
-              >
-                {text}
-              </Button>
-            </Col>
+            <Button
+              key={`auth-button-${index}`}
+              type="primary"
+              onClick={() => {
+                setMethod(method);
+                action();
+              }}
+              {...testNode(`auth-button-${index}`)}
+            >
+              {label}
+            </Button>
           );
         })}
-      </Row>
+      {user && (
+        <Dropdown menu={{ items: userMenu }} trigger={['click']}>
+          <Button style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Avatar size={'small'}>{user?.email?.[0]?.toUpperCase()}</Avatar>
+            <Typography.Paragraph
+              ellipsis={true}
+              style={{ margin: 0, maxWidth: md ? 'max-content' : '100px' }}
+            >
+              {user?.email}
+            </Typography.Paragraph>
+          </Button>
+        </Dropdown>
+      )}
       <Modal open={open} title={user?.email} onCancel={handleCancel} footer={null}>
         <AuthForm onFinish={() => setOpen(false)} method={method} />
       </Modal>

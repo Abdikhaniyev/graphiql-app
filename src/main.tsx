@@ -1,11 +1,11 @@
 import 'antd/dist/reset.css';
-import React, { StrictMode } from 'react';
-import ReactDOM, { createRoot } from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
-import { Context, defaultContext } from './store/context.ts';
 import { setupStore } from './redux/store.ts';
+import { Context, defaultContext } from './store/context.ts';
 
 const store = setupStore();
 

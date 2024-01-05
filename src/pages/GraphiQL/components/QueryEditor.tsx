@@ -1,5 +1,6 @@
+import { javascript } from '@codemirror/lang-javascript';
 import { Icon } from '@iconify/react';
-import createTheme from '@uiw/codemirror-themes';
+import { materialLightInit } from '@uiw/codemirror-theme-material';
 import CodeMirror, { ReactCodeMirrorProps } from '@uiw/react-codemirror';
 import { Button, Flex, theme } from 'antd';
 import { useCallback } from 'react';
@@ -21,26 +22,17 @@ export default function QueryEditor({
   ...props
 }: QueryEditorProps) {
   const { token } = useToken();
-  const readOnlyTheme = createTheme({
-    theme: 'light',
+
+  const readOnlyTheme = materialLightInit({
     settings: {
       background: 'transparent',
-      gutterBackground: 'transparent',
-      fontFamily: token.fontFamily,
-      selectionMatch: token.colorPrimaryBgHover,
-      lineHighlight: token.colorPrimaryBg,
     },
     styles: [],
   });
 
-  const defaultTheme = createTheme({
-    theme: 'light',
+  const defaultTheme = materialLightInit({
     settings: {
       background: token.colorBgContainer,
-      gutterBackground: token.colorBgContainer,
-      fontFamily: token.fontFamily,
-      selectionMatch: token.colorPrimaryBgHover,
-      lineHighlight: token.colorPrimaryBg,
     },
     styles: [],
   });
@@ -52,16 +44,18 @@ export default function QueryEditor({
 
   const formatGraphQL = useCallback((value: string) => {
     if (!onChange) return;
-    let indentation = 1;
+    let indentation = 0;
     let formatted = '';
-    value = value.replaceAll('\t', '').replaceAll(' ', '');
+
+    value = value.replaceAll('\t', '').replaceAll(/ {2,}/g, ' ');
 
     value.split('\n').forEach((line) => {
+      line = line.trim();
       if (line.match(/\s*[}]\s*/)) {
         indentation -= 1;
       }
 
-      formatted += `${'\t'.repeat(indentation)}${line}\n`;
+      formatted += `${'  '.repeat(indentation)}${line}\n`;
 
       if (line.match(/\s*[{]\s*/)) {
         indentation += 1;
@@ -76,13 +70,16 @@ export default function QueryEditor({
       <CodeMirror
         value={value}
         onChange={onChange}
-        height="80vh"
+        height="83vh"
         editable={!readOnly}
         readOnly={readOnly}
         theme={readOnly ? readOnlyTheme : defaultTheme}
+        extensions={[javascript({ jsx: true })]}
         {...props}
         style={{
           flex: '1',
+          borderRadius: token.borderRadius,
+          overflow: 'hidden',
           ...props.style,
         }}
       />

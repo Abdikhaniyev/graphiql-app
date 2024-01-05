@@ -71,10 +71,6 @@ export default function GraphiQL() {
           onChange={onChangeQuery}
           onClickRun={onClickRun}
           height="50vh"
-          style={{
-            borderRadius: token.borderRadius,
-            overflow: 'hidden',
-          }}
         />
         <Tabs items={items} />
       </Col>

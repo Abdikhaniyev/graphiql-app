@@ -1,8 +1,13 @@
 import { Flex, Layout, Space, Typography } from 'antd';
+import { useContext } from 'react';
+import { Context } from '../store/context';
+import { KEYS as TEXT, getText } from '../locales/text';
 
 const { Footer } = Layout;
 
 export default function LayoutFooter() {
+  const { locale } = useContext(Context);
+
   const users = [
     {
       name: 'Alisher Abdikhaniyev',
@@ -28,7 +33,7 @@ export default function LayoutFooter() {
       }}
     >
       <Space direction="vertical">
-        <Typography>Created by: </Typography>
+        <Typography>{getText(TEXT.CREATED_BY, locale)}: </Typography>
         <Flex gap={8} wrap="wrap">
           {users.map((user) => (
             <a key={user.name} href={user.link} target="_blank" rel="noreferrer">

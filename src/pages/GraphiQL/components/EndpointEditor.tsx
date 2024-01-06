@@ -1,10 +1,13 @@
 import { Icon } from '@iconify/react';
 import { Button, Flex, Input, Typography } from 'antd';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
 import { setEndpoint } from '../../../redux/slices/QuerySlice';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { Context } from '../../../store/context';
+import { KEYS as TEXT, getText } from '../../../locales/text';
 
 export default function EndpointEditor() {
+  const { locale } = useContext(Context);
   const [editing, setEditing] = useState(false);
   const endpoint = useAppSelector((state) => state.query.endpoint);
   const dispatch = useAppDispatch();
@@ -20,7 +23,12 @@ export default function EndpointEditor() {
   if (editing) {
     return (
       <Flex gap={8} align="center" style={{ width: '100%' }}>
-        <Input style={{ flex: '1' }} value={endpoint} onChange={setValue} />
+        <Input
+          placeholder={getText(TEXT.ENDPOINT_PLACEHOLDER, locale)}
+          style={{ flex: '1' }}
+          value={endpoint}
+          onChange={setValue}
+        />
         <Button
           onClick={save}
           type="primary"

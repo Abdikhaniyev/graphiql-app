@@ -1,16 +1,19 @@
 import { Icon } from '@iconify/react';
 import { Button, Col, Row, Tabs, TabsProps, message, theme } from 'antd';
 import debounce from 'lodash.debounce';
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useLazyGetCustomQueryQuery } from '../../redux/actions/graphql';
 import { setHeaders, setQuery, setResult, setVariables } from '../../redux/slices/QuerySlice';
 import { useAppDispatch, useAppSelector } from '../../redux/store';
 import EndpointEditor from './components/EndpointEditor';
 import QueryEditor from './components/QueryEditor';
+import { Context } from '../../store/context';
+import { KEYS as TEXT, getText } from '../../locales/text';
 
 const { useToken } = theme;
 
 export default function GraphiQL() {
+  const { locale } = useContext(Context);
   const [showTabs, setShowTabs] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const { token } = useToken();
@@ -44,16 +47,26 @@ export default function GraphiQL() {
   const items: TabsProps['items'] = [
     {
       key: '1',
-      label: 'Variables',
+      label: getText(TEXT.VARIABLES, locale),
       children: showTabs ? (
-        <QueryEditor value={variables} onChange={onChangeVariables} height={'20vh'} />
+        <QueryEditor
+          placeholder={getText(TEXT.VARIABLES_PLACEHOLDER, locale)}
+          value={variables}
+          onChange={onChangeVariables}
+          height={'20vh'}
+        />
       ) : null,
     },
     {
       key: '2',
-      label: 'Headers',
+      label: getText(TEXT.HEADERS, locale),
       children: showTabs ? (
-        <QueryEditor value={headers} onChange={onChangeHeaders} height={'20vh'} />
+        <QueryEditor
+          placeholder={getText(TEXT.HEADERS_PLACEHOLDER, locale)}
+          value={headers}
+          onChange={onChangeHeaders}
+          height={'20vh'}
+        />
       ) : null,
     },
   ];
@@ -77,7 +90,7 @@ export default function GraphiQL() {
       >
         <EndpointEditor />
         <QueryEditor
-          placeholder={'Enter your query here'}
+          placeholder={getText(TEXT.QUERY_PLACEHOLDER, locale)}
           value={query}
           onChange={onChangeQuery}
           onClickRun={onClickRun}

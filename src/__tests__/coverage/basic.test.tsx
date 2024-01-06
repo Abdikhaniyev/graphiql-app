@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { describe, expect, test, afterEach, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { default as Playground } from './../../pages/Playground/Page';
+import { default as Playground } from './../../pages/GraphiQL/Page';
 import { default as Welcome } from './../../pages/Welcome/Page';
 
 Object.defineProperty(window, 'matchMedia', {

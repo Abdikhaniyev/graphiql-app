@@ -55,12 +55,11 @@ export const api = createApi({
       }),
     }),
     getCustomQuerySchema: builder.query({
-      queryFn: async ({ variables }, api, extraOptions) => {
+      queryFn: async (_args, api, extraOptions) => {
         const introspectionQuery = getIntrospectionQuery();
         const { data, error } = await dynamicBaseQuery(
           {
             document: introspectionQuery,
-            variables,
           },
           api,
           extraOptions

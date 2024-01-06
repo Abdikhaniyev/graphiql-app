@@ -11,16 +11,18 @@ import { MESSAGES, getMessage } from '../../../locales/messages';
 import { KEYS as TEXT, getText } from '../../../locales/text';
 import { useLazyGetCustomQuerySchemaQuery } from '../../../redux/actions/graphql';
 import { Context } from '../../../store/context';
+import { useAppSelector } from '../../../redux/store';
 
 type TypeMap = ObjMap<GraphQLNamedType>;
 
 export default function Documentation() {
+  const { locale } = useContext(Context);
   const [messageApi, contextHolder] = message.useMessage();
   const [open, setOpen] = useState(false);
   const [type, setType] = useState<GraphQLObjectType | null>(null);
-  const [fetchSchema] = useLazyGetCustomQuerySchemaQuery({});
   const [typeMap, setTypeMap] = useState<TypeMap | null>(null);
-  const { locale } = useContext(Context);
+  const [fetchSchema] = useLazyGetCustomQuerySchemaQuery();
+  const endpoint = useAppSelector((state) => state.query.endpoint);
 
   useEffect(() => {
     fetchSchema({})
@@ -32,7 +34,7 @@ export default function Documentation() {
       .catch(() => {
         messageApi.error(getMessage(MESSAGES.API_SCHEMA_ERROR, locale));
       });
-  }, [fetchSchema]);
+  }, [fetchSchema, endpoint]);
 
   return (
     <Flex vertical>

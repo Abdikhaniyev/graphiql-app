@@ -12,17 +12,20 @@ import { emailForm, passwordForm, passwordConfirmForm, submitButtonForm } from '
 
 const { Text } = Typography;
 const definedRules = [RULES.EMAIL, RULES.PASSWORD, RULES.PASSWORD_CONFIRM];
-const LoginForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS }) => {
+const AuthForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS }) => {
   const [loginForm] = Form.useForm();
   const { locale } = useContext(Context);
   const [user, loading, error, authMethod] = useAuth(firebaseAuth, method);
   const [message, setMessage] = useState('');
+
   useEffect(() => {
     if (loading) setMessage('');
   }, [loading]);
+
   useEffect(() => {
     updateRuleLocale(definedRules, locale);
   }, [locale]);
+
   const login = async () => {
     const { email, password }: SignInForm = loginForm.getFieldsValue();
     try {
@@ -61,4 +64,4 @@ const LoginForm = ({ onFinish, method }: { onFinish: () => void; method: METHODS
   );
 };
 
-export default LoginForm;
+export default AuthForm;

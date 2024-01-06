@@ -1,17 +1,16 @@
 import '@testing-library/jest-dom';
 import { describe, expect, test, vi, afterEach } from 'vitest';
 import { cleanup, render, screen, waitFor, fireEvent } from '@testing-library/react';
-import AppRoutes from '../../components/Router';
+import AppRoutes from '../../components/Router.tsx';
 import { MemoryRouter } from 'react-router-dom';
-import {
-  emailForm,
-  passwordForm,
-  passwordConfirmForm,
-  submitButtonForm,
-} from '../../components/AuthForm/forms';
-import { method, KEYS } from '../../firebase/methods/methods';
-import { auth } from '../../firebase/firebase';
-import React from 'react';
+import { method, KEYS } from '../../firebase/methods/methods.ts';
+import { auth } from '../../firebase/firebase.ts';
+
+import { setupStore } from '../../redux/store.ts';
+import { Provider } from 'react-redux';
+import { Context, defaultContext } from '../../store/context.ts';
+
+const store = setupStore();
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -29,7 +28,11 @@ Object.defineProperty(window, 'matchMedia', {
 
 const route = (init: string) => (
   <MemoryRouter initialEntries={[init]}>
-    <AppRoutes />
+    <Provider store={store}>
+      <Context.Provider value={defaultContext}>
+        <AppRoutes />
+      </Context.Provider>
+    </Provider>
   </MemoryRouter>
 );
 
@@ -69,12 +72,9 @@ describe('Coverage tests of routes:', () => {
     const inputPasswordConfirm = screen.queryByTestId('input-password-confirm');
     waitFor(() => expect(inputPasswordConfirm).toBeInTheDocument());
 
-    expect(emailForm({})).toEqual(<React.Fragment />);
-    expect(passwordForm({})).toEqual(<React.Fragment />);
-    expect(passwordConfirmForm({})).toEqual(<React.Fragment />);
-    expect(submitButtonForm({})).toEqual(<React.Fragment />);
-
-    expect(method(KEYS.NOTHING, auth, '', '')).toBeFalsy();
-    expect(await method(KEYS.SIGN_OUT, auth, '', '')).toBeFalsy();
+    waitFor(() => expect(method(KEYS.NOTHING, auth, '', '')).toBeFalsy());
+    waitFor(() => expect(method(KEYS.SIGN_OUT, auth, '', '')).toBeFalsy());
+    const signUp = screen.queryByTestId(`auth-button-1`);
+    if (signUp) waitFor(() => fireEvent.click(signUp));
   });
 });

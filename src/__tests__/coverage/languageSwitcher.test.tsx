@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { describe, expect, test, vi, afterEach } from 'vitest';
-import { cleanup, render, screen, waitFor, fireEvent, act } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, fireEvent } from '@testing-library/react';
 import AppRoutes from '../../components/Router';
 import { MemoryRouter } from 'react-router-dom';
 import { LOCALES } from '../../locales/locales';
@@ -31,10 +31,10 @@ afterEach(() => {
 
 describe('Coverage tests of languageSwitcher:', () => {
   test('basic components', async () => {
-    render(route('/'));
+    await waitFor(() => render(route('/')));
     const buttonLanguageSwitcher = screen.queryByTestId('language-switcher');
-    if (buttonLanguageSwitcher) await act(() => fireEvent.click(buttonLanguageSwitcher));
-    waitFor(() => expect(screen.queryByTestId(`language-${LOCALES.RU}`)).toBeVisible());
-    waitFor(() => expect(screen.queryByTestId(`language-${LOCALES.EN}`)).toBeVisible());
+    if (buttonLanguageSwitcher) await waitFor(() => fireEvent.click(buttonLanguageSwitcher));
+    await waitFor(() => expect(screen.queryByTestId(`language-${LOCALES.RU}`)).toBeVisible());
+    await waitFor(() => expect(screen.queryByTestId(`language-${LOCALES.EN}`)).toBeVisible());
   });
 });

@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
 import { describe, expect, test, afterEach, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
-import { default as Playground } from './../../pages/Playground/Page';
-import { default as Welcome } from './../../pages/Welcome/Page';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { reactElement } from '../../main';
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -23,12 +22,11 @@ afterEach(() => {
 });
 
 describe('Coverage tests:', () => {
-  test('basic tab components', async () => {
-    expect(Playground).toBeDefined();
-    expect(Welcome).toBeDefined();
+  test('main component', async () => {
+    expect(reactElement).toBeDefined();
   });
-  test('render playground', async () => {
-    render(Playground());
-    expect(screen.queryByTestId('playground')).toBeInTheDocument();
+  test('render app', async () => {
+    await waitFor(() => render(reactElement));
+    expect(screen.queryByTestId('welcome')).toBeInTheDocument();
   });
 });

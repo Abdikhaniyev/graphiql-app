@@ -26,7 +26,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
     "@rtk-query/graphql-request-base-query": "^2.3.1",
-    "@uiw/codemirror-themes": "^4.21.21",
+    "@uiw/codemirror-theme-material": "^4.21.21",
     "@uiw/react-codemirror": "^4.21.21",
     "antd": "^5.12.2",
     "graphql": "^16.8.1",
@@ -39,9 +39,9 @@
   },
   "devDependencies": {
     "@iconify/react": "^4.1.1",
-    "@types/lodash.debounce": "^4.0.9",
     "@testing-library/jest-dom": "^6.1.6",
     "@testing-library/react": "^14.1.2",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@typescript-eslint/eslint-plugin": "^6.14.0",

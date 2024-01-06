@@ -16,6 +16,9 @@ export enum KEYS {
   ABOUT_PROJECT,
   ABOUT_PROJECT_DESCRIPTION,
   ABOUT_COURSE_DESCRIPTION,
+  DOCUMENTATION,
+  SCHEMA_TYPES,
+  FIELDS,
   DEFAULT = EMPTY,
 }
 export type Keys<T = string> = Partial<Record<KEYS, T>>;
@@ -56,5 +59,8 @@ export const textInit: Text[] = [
     'RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013.',
     'RS School — это бесплатная образовательная программа, проводимая сообществом разработчиков The Rolling Scopes с 2013 года.',
   ],
+  [KEYS.DOCUMENTATION, 'Documentation', 'Документация'],
+  [KEYS.SCHEMA_TYPES, 'All Schema Types', 'Все типы схемы'],
+  [KEYS.FIELDS, 'Fields', 'Поля'],
 ];
 export const text: Keys<Locales> = textInit.reduce(setText, {} as Keys<Locales>) as Keys<Locales>;

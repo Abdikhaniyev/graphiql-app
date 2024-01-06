@@ -17,6 +17,9 @@ export enum MESSAGES {
 
   PERMISSION_DENIED,
 
+  API_ERROR,
+  API_SCHEMA_ERROR,
+
   DEFAULT = EMPTY,
 }
 export type Messages<T = string> = Partial<Record<MESSAGES, T>>;
@@ -61,6 +64,16 @@ export const message: Messages<Locales> = (
       MESSAGES.PERMISSION_DENIED,
       `Permission denied, please sign in or sign up`,
       'Доступ запрещен, пожалуйста пройдите авторизацию',
+    ],
+    [
+      MESSAGES.API_ERROR,
+      'Error while executing the request, please try again later',
+      'Ошибка при выполнении запроса, пожалуйста попробуйте позже',
+    ],
+    [
+      MESSAGES.API_SCHEMA_ERROR,
+      'Error retrieving data schema, please try again later',
+      'Ошибка при получении схемы данных, пожалуйста попробуйте позже',
     ],
   ] as Message[]
 ).reduce(setMessage, {} as Messages<Locales>) as Messages<Locales>;

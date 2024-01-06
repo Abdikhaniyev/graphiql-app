@@ -54,7 +54,7 @@ export default function QueryEditor({
         indentation -= 1;
       }
 
-      formatted += `${'  '.repeat(indentation)}${line}\n`;
+      if (line !== '') formatted += `${'  '.repeat(Math.max(0, indentation))}${line}\n`;
 
       if (line.match(/\s*[{]\s*/)) {
         indentation += 1;

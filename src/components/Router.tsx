@@ -12,9 +12,9 @@ export default function AppRoutes() {
         <Route path={ROUTES.PLAYGROUND} element={<PrivateRoute />}>
           <Route path={ROUTES.PLAYGROUND} element={<Pages.GraphiQL />} />
         </Route>
-        <Route path={ROUTES.NOT_FOUND} element={<Pages.Page404 />}></Route>
+        <Route path={ROUTES.ERROR_404} element={<Pages.Page404 />}></Route>
       </Route>
-      <Route path={'*'} element={<Navigate replace to={ROUTES.NOT_FOUND} />}></Route>
+      <Route path={ROUTES.NOT_FOUND} element={<Navigate replace to={ROUTES.ERROR_404} />}></Route>
     </Routes>
   );
 }

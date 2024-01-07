@@ -6,18 +6,22 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import { setupStore } from './redux/store.ts';
 import { Context, defaultContext } from './store/context.ts';
+import { Alert } from 'antd';
 
+const { ErrorBoundary } = Alert;
 const store = setupStore();
 
 const reactElement = (
   <StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <Context.Provider value={defaultContext}>
-          <App />
-        </Context.Provider>
-      </Provider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Provider store={store}>
+          <Context.Provider value={defaultContext}>
+            <App />
+          </Context.Provider>
+        </Provider>
+      </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>
 );
 const root = document.getElementById('root') ?? document.createElement('div');

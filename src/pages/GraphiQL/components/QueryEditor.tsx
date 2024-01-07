@@ -1,3 +1,4 @@
+import { testNode } from '../../../tests/testNode';
 import { Icon } from '@iconify/react';
 import { materialLightInit } from '@uiw/codemirror-theme-material';
 import CodeMirror, { ReactCodeMirrorProps } from '@uiw/react-codemirror';
@@ -88,6 +89,7 @@ export default function QueryEditor({
               type="primary"
               icon={<Icon width="20" icon={'fluent:play-16-regular'} />}
               onClick={onClickRun}
+              {...testNode('graphql-run')}
             />
           )}
           <Button
@@ -95,8 +97,13 @@ export default function QueryEditor({
             onClick={() => {
               formatGraphQL(value);
             }}
+            {...testNode(`graphql-format${onClickRun ? '' : '-2'}`)}
           />
-          <Button icon={<Icon width="20" icon={'fluent:dismiss-16-regular'} />} onClick={clear} />
+          <Button
+            icon={<Icon width="20" icon={'fluent:dismiss-16-regular'} />}
+            onClick={clear}
+            {...testNode(`graphql-clear${onClickRun ? '' : '-2'}`)}
+          />
         </Flex>
       )}
     </Flex>

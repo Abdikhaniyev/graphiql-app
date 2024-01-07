@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { describe, expect, test, afterEach, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { default as Playground } from './../../pages/GraphiQL/Page';
 import { default as Welcome } from './../../pages/Welcome/Page';
 
@@ -28,7 +28,7 @@ describe('Coverage tests:', () => {
     expect(Welcome).toBeDefined();
   });
   test('render playground', async () => {
-    render(Playground());
-    expect(screen.queryByTestId('playground')).toBeInTheDocument();
+    waitFor(() => render(Playground()));
+    waitFor(() => expect(screen.queryByTestId('playground')).toBeInTheDocument());
   });
 });

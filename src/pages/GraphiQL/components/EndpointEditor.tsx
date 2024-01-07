@@ -1,3 +1,4 @@
+import { testNode } from '../../../tests/testNode';
 import { Icon } from '@iconify/react';
 import { Button, Flex, Input, Typography } from 'antd';
 import { ChangeEvent, useContext, useState } from 'react';
@@ -33,6 +34,7 @@ export default function EndpointEditor() {
           onClick={save}
           type="primary"
           icon={<Icon icon={'fluent:checkmark-16-regular'} width={20} />}
+          {...testNode('endpoint-save')}
         />
       </Flex>
     );
@@ -54,6 +56,7 @@ export default function EndpointEditor() {
       <Button
         onClick={() => setEditing(true)}
         icon={<Icon icon={'fluent:edit-16-regular'} width={20} />}
+        {...testNode('endpoint-edit')}
       />
     </Flex>
   );

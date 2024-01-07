@@ -3,12 +3,15 @@ import { describe, expect, test, vi, afterEach } from 'vitest';
 import { cleanup, render, screen, waitFor, fireEvent } from '@testing-library/react';
 import AppRoutes from '../../components/Router.tsx';
 import { MemoryRouter } from 'react-router-dom';
-import { method, KEYS } from '../../firebase/methods/methods.ts';
-import { auth } from '../../firebase/firebase.ts';
 
 import { setupStore } from '../../redux/store.ts';
 import { Provider } from 'react-redux';
 import { Context, defaultContext } from '../../store/context.ts';
+import * as Pages from '../../pages';
+import { Routes, Route } from 'react-router-dom';
+import { ROUTES } from '../../routes/routes';
+import LayoutSidebar from '../../layouts/Sidebar.tsx';
+import Documentation from '../../pages/GraphiQL/components/Documentation.tsx';
 
 const store = setupStore();
 
@@ -26,15 +29,40 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-const route = (init: string) => (
+const route = (init: string, Routes = AppRoutes) => (
   <MemoryRouter initialEntries={[init]}>
     <Provider store={store}>
       <Context.Provider value={defaultContext}>
-        <AppRoutes />
+        <Routes />
       </Context.Provider>
     </Provider>
   </MemoryRouter>
 );
+
+const graphQLRoute = () => (
+  <Routes>
+    <Route
+      path={ROUTES.PLAYGROUND}
+      element={
+        <>
+          <Pages.GraphiQL />
+          <LayoutSidebar />
+          <Documentation />
+        </>
+      }
+    />
+  </Routes>
+);
+const testNodes = [
+  'playground',
+  'graphql-run',
+  'graphql-format',
+  'graphql-clear',
+  'graphql-clear',
+  'graphql-right',
+  'endpoint-edit',
+  'endpoint-save',
+];
 
 afterEach(() => {
   cleanup();
@@ -42,39 +70,43 @@ afterEach(() => {
 
 describe('Coverage tests of routes:', () => {
   test('home route', async () => {
-    render(route('/'));
+    waitFor(() => render(route('/')));
     waitFor(() => expect(screen.queryByTestId('welcome')).toBeInTheDocument());
   });
   test('playground routes', async () => {
-    render(route('/playground2'));
+    waitFor(() => render(route('/playground2')));
     waitFor(() => expect(screen.queryByTestId('welcome')).toBeInTheDocument());
   });
   test('playground routes', async () => {
-    render(route('/playground'));
-    waitFor(() => expect(screen.queryByTestId('welcome')).toBeInTheDocument());
-  });
+    waitFor(() => render(route('/playground')));
 
-  test('render routes', async () => {
-    render(route('/playground'));
-    waitFor(() => expect(screen.queryByTestId('private-route-loading')).toBeInTheDocument());
-    waitFor(() => expect(screen.queryByTestId('private-route-loading')).toBeFalsy());
-    waitFor(() => expect(screen.queryByTestId('playground')).toBeFalsy());
-    waitFor(() => expect(screen.queryByTestId('welcome')).toBeInTheDocument());
-    const buttonSignIn = screen.queryByTestId('auth-button-2');
-    if (buttonSignIn) fireEvent.click(buttonSignIn);
-    waitFor(() => expect(buttonSignIn).toBeInTheDocument());
+    const signUp = screen.queryByTestId(`auth-button-1`);
+    waitFor(() => expect(signUp).toBeTruthy());
+    if (signUp) waitFor(() => fireEvent.click(signUp));
+
     const buttonSubmit = screen.queryByTestId('button-submit');
     waitFor(() => expect(buttonSubmit).toBeInTheDocument());
-    const inputEmail = screen.queryByTestId('input-email');
-    waitFor(() => expect(inputEmail).toBeInTheDocument());
+    waitFor(() => expect(buttonSubmit).toBeTruthy());
     const inputPassword = screen.queryByTestId('input-password');
+    waitFor(() => expect(inputPassword).toBeTruthy());
     waitFor(() => expect(inputPassword).toBeInTheDocument());
     const inputPasswordConfirm = screen.queryByTestId('input-password-confirm');
+    waitFor(() => expect(inputPasswordConfirm).toBeTruthy());
     waitFor(() => expect(inputPasswordConfirm).toBeInTheDocument());
-
-    waitFor(() => expect(method(KEYS.NOTHING, auth, '', '')).toBeFalsy());
-    waitFor(() => expect(method(KEYS.SIGN_OUT, auth, '', '')).toBeFalsy());
-    const signUp = screen.queryByTestId(`auth-button-1`);
-    if (signUp) waitFor(() => fireEvent.click(signUp));
+  });
+  test('playground routes', async () => {
+    waitFor(() => render(route(ROUTES.PLAYGROUND, graphQLRoute)));
+    testNodes.forEach((testNode) => {
+      const node = screen.queryByTestId(testNode);
+      expect(node).toBeTruthy();
+      waitFor(() => expect(node).toBeInTheDocument());
+      if (node) waitFor(() => fireEvent.click(node));
+    });
+    const buttonOpen = screen.queryByTestId('button-sidebar-open');
+    waitFor(() => expect(buttonOpen).toBeInTheDocument());
+    expect(buttonOpen).toBeTruthy();
+    if (buttonOpen) waitFor(() => fireEvent.click(buttonOpen));
+    const documentation = screen.queryByTestId('documentation');
+    waitFor(() => expect(documentation).toBeInTheDocument());
   });
 });

@@ -60,8 +60,8 @@ export default function Auth() {
       setMethod(METHODS.NOTHING);
       navigate(ROUTES.DEFAULT);
     }
-    if (method !== METHODS.NOTHING) navigate(ROUTES.DEFAULT);
-  }, [method]);
+    if (method !== METHODS.NOTHING && user?.email) navigate(ROUTES.DEFAULT);
+  }, [method, user?.email]);
 
   return (
     <>

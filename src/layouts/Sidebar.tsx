@@ -30,6 +30,7 @@ export default function LayoutSidebar() {
           justifyContent: 'center',
           alignItems: 'center',
         }}
+        {...testNode('button-sidebar-open')}
       />
       <Drawer
         placement="left"

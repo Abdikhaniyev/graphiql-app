@@ -1,3 +1,4 @@
+import { testNode } from '../../tests/testNode';
 import { Icon } from '@iconify/react';
 import { Button, Col, Row, Tabs, TabsProps, message, theme } from 'antd';
 import debounce from 'lodash.debounce';
@@ -67,6 +68,7 @@ export default function GraphiQL() {
         backgroundColor: token.colorBgLayout,
         borderRadius: token.borderRadiusLG,
       }}
+      {...testNode('playground')}
     >
       {contextHolder}
       <Col
@@ -106,6 +108,7 @@ export default function GraphiQL() {
                 onClick={() => {
                   setShowTabs(!showTabs);
                 }}
+                {...testNode('graphql-right')}
               />
             ),
           }}

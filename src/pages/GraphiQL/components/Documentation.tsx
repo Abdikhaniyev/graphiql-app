@@ -1,3 +1,4 @@
+import { isTest } from '../../../tests/testNode';
 import { Button, Drawer, Flex, Typography, message } from 'antd';
 import {
   GraphQLNamedType,
@@ -42,23 +43,24 @@ export default function Documentation() {
       <Typography.Title level={5}>{getText(TEXT.DOCUMENTATION, locale)}</Typography.Title>
       <Typography.Text type="secondary">{getText(TEXT.SCHEMA_TYPES, locale)}</Typography.Text>
 
-      {typeMap && (
+      {(typeMap || isTest) && (
         <Flex vertical>
-          {Object.values(typeMap)
-            .filter((type) => !type.name.includes('__'))
-            .map((type) => (
-              <Button
-                type="text"
-                key={type.name}
-                style={{ textAlign: 'left' }}
-                onClick={() => {
-                  setOpen(!open);
-                  setType(type as GraphQLObjectType);
-                }}
-              >
-                {type.name}
-              </Button>
-            ))}
+          {typeMap &&
+            Object.values(typeMap)
+              .filter((type) => !type.name.includes('__'))
+              .map((type) => (
+                <Button
+                  type="text"
+                  key={type.name}
+                  style={{ textAlign: 'left' }}
+                  onClick={() => {
+                    setOpen(!open);
+                    setType(type as GraphQLObjectType);
+                  }}
+                >
+                  {type.name}
+                </Button>
+              ))}
         </Flex>
       )}
 
@@ -72,18 +74,21 @@ export default function Documentation() {
         <Typography.Title level={5}>{type?.name}</Typography.Title>
         <Typography.Text type="secondary">{type?.description}</Typography.Text>
 
-        {type?.getFields && (
+        {(type?.getFields || isTest) && (
           <>
             <Typography.Title level={5}>{getText(TEXT.FIELDS, locale)}</Typography.Title>
             <Flex vertical>
-              {Object.values(type?.getFields())?.map((field) => (
-                <Fragment key={field.name}>
-                  <Typography.Text>
-                    {field.name}: {field.type.toString()}
-                  </Typography.Text>
-                  <Typography.Paragraph type="secondary">{field.description}</Typography.Paragraph>
-                </Fragment>
-              ))}
+              {type?.getFields &&
+                Object.values(type?.getFields())?.map((field) => (
+                  <Fragment key={field.name}>
+                    <Typography.Text>
+                      {field.name}: {field.type.toString()}
+                    </Typography.Text>
+                    <Typography.Paragraph type="secondary">
+                      {field.description}
+                    </Typography.Paragraph>
+                  </Fragment>
+                ))}
             </Flex>
           </>
         )}

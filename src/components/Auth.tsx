@@ -60,6 +60,7 @@ export default function Auth() {
       setMethod(METHODS.NOTHING);
       navigate(ROUTES.DEFAULT);
     }
+    if (method !== METHODS.NOTHING) navigate(ROUTES.DEFAULT);
   }, [method]);
 
   return (
